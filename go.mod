@@ -1,6 +1,6 @@
 module github.com/piwriw/go-client
 
-go 1.17
+go 1.20
 
 require (
 	github.com/go-openapi/errors v0.22.0
