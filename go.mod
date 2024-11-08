@@ -1,4 +1,4 @@
-module github.com/goharbor/go-client
+module github.com/piwriw/go-client
 
 go 1.17
 
