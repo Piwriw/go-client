@@ -67,7 +67,7 @@ type ListArtifactsParams struct {
 	     A comma-separated lists of MIME types for the scan report or scan summary. The first mime type will be used when the report found for it.
 	Currently the mime type supports 'application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0' and 'application/vnd.security.vulnerability.report; version=1.1'
 
-	     Default: "application/vnd.security.vulnerability.report; version=1.1, application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0"
+	     Default: "application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0"
 	*/
 	XAcceptVulnerabilities *string
 
@@ -109,25 +109,19 @@ type ListArtifactsParams struct {
 
 	/* RepositoryName.
 
-	   The name of the repository. If it contains slash, encode it twice over with URL encoding. e.g. a/b -> a%2Fb -> a%252Fb
+	   The name of the repository. If it contains slash, encode it with URL encoding. e.g. a/b -> a%252Fb
 	*/
 	RepositoryName string
 
 	/* Sort.
 
-	   Sort the resource list in ascending or descending order. e.g. sort by field1 in ascending order and field2 in descending order with "sort=field1,-field2"
+	   Sort the resource list in ascending or descending order. e.g. sort by field1 in ascending orderr and field2 in descending order with "sort=field1,-field2"
 	*/
 	Sort *string
 
-	/* WithAccessory.
-
-	   Specify whether the accessories are included of the returning artifacts. Only works when setting "with_accessory=true"
-	*/
-	WithAccessory *bool
-
 	/* WithImmutableStatus.
 
-	   Specify whether the immutable status is included inside the tags of the returning artifacts. Only works when setting "with_immutable_status=true"
+	   Specify whether the immutable status is included inside the tags of the returning artifacts. Only works when setting "with_tag=true"
 	*/
 	WithImmutableStatus *bool
 
@@ -175,13 +169,11 @@ func (o *ListArtifactsParams) WithDefaults() *ListArtifactsParams {
 // All values with no default are reset to their zero value.
 func (o *ListArtifactsParams) SetDefaults() {
 	var (
-		xAcceptVulnerabilitiesDefault = string("application/vnd.security.vulnerability.report; version=1.1, application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0")
+		xAcceptVulnerabilitiesDefault = string("application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0")
 
 		pageDefault = int64(1)
 
 		pageSizeDefault = int64(10)
-
-		withAccessoryDefault = bool(false)
 
 		withImmutableStatusDefault = bool(false)
 
@@ -198,7 +190,6 @@ func (o *ListArtifactsParams) SetDefaults() {
 		XAcceptVulnerabilities: &xAcceptVulnerabilitiesDefault,
 		Page:                   &pageDefault,
 		PageSize:               &pageSizeDefault,
-		WithAccessory:          &withAccessoryDefault,
 		WithImmutableStatus:    &withImmutableStatusDefault,
 		WithLabel:              &withLabelDefault,
 		WithScanOverview:       &withScanOverviewDefault,
@@ -331,17 +322,6 @@ func (o *ListArtifactsParams) WithSort(sort *string) *ListArtifactsParams {
 // SetSort adds the sort to the list artifacts params
 func (o *ListArtifactsParams) SetSort(sort *string) {
 	o.Sort = sort
-}
-
-// WithWithAccessory adds the withAccessory to the list artifacts params
-func (o *ListArtifactsParams) WithWithAccessory(withAccessory *bool) *ListArtifactsParams {
-	o.SetWithAccessory(withAccessory)
-	return o
-}
-
-// SetWithAccessory adds the withAccessory to the list artifacts params
-func (o *ListArtifactsParams) SetWithAccessory(withAccessory *bool) {
-	o.WithAccessory = withAccessory
 }
 
 // WithWithImmutableStatus adds the withImmutableStatus to the list artifacts params
@@ -496,23 +476,6 @@ func (o *ListArtifactsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		if qSort != "" {
 
 			if err := r.SetQueryParam("sort", qSort); err != nil {
-				return err
-			}
-		}
-	}
-
-	if o.WithAccessory != nil {
-
-		// query param with_accessory
-		var qrWithAccessory bool
-
-		if o.WithAccessory != nil {
-			qrWithAccessory = *o.WithAccessory
-		}
-		qWithAccessory := swag.FormatBool(qrWithAccessory)
-		if qWithAccessory != "" {
-
-			if err := r.SetQueryParam("with_accessory", qWithAccessory); err != nil {
 				return err
 			}
 		}

@@ -18,9 +18,9 @@ import (
 // API is the interface of the ping client
 type API interface {
 	/*
-	   GetPing pings harbor to check if the API server is alive
+	   GetPing pings harbor to check if it s alive
 
-	   This API simply replies a pong to indicate the process to handle API is up, disregarding the health status of dependent components. This path does not require any authentication.*/
+	   This API simply replies a pong to indicate the process to handle API is up, disregarding the health status of dependent components.*/
 	GetPing(ctx context.Context, params *GetPingParams) (*GetPingOK, error)
 }
 
@@ -43,9 +43,9 @@ type Client struct {
 }
 
 /*
-GetPing pings harbor to check if the API server is alive
+GetPing pings harbor to check if it s alive
 
-This API simply replies a pong to indicate the process to handle API is up, disregarding the health status of dependent components. This path does not require any authentication.
+This API simply replies a pong to indicate the process to handle API is up, disregarding the health status of dependent components.
 */
 func (a *Client) GetPing(ctx context.Context, params *GetPingParams) (*GetPingOK, error) {
 

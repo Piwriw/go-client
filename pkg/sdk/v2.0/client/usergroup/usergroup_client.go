@@ -35,7 +35,7 @@ type API interface {
 	/*
 	   ListUserGroups gets all user groups information
 
-	   Get all user groups information, it is open for system admin*/
+	   Get all user groups information*/
 	ListUserGroups(ctx context.Context, params *ListUserGroupsParams) (*ListUserGroupsOK, error)
 	/*
 	   SearchUserGroups searches groups by groupname
@@ -152,7 +152,7 @@ func (a *Client) GetUserGroup(ctx context.Context, params *GetUserGroupParams) (
 /*
 ListUserGroups gets all user groups information
 
-Get all user groups information, it is open for system admin
+Get all user groups information
 */
 func (a *Client) ListUserGroups(ctx context.Context, params *ListUserGroupsParams) (*ListUserGroupsOK, error) {
 

@@ -36,7 +36,7 @@ type Robot struct {
 	// The editable status of the robot
 	Editable bool `json:"editable"`
 
-	// The expiration date of the robot
+	// The expiration data of the robot
 	ExpiresAt int64 `json:"expires_at,omitempty"`
 
 	// The ID of the robot
@@ -45,7 +45,7 @@ type Robot struct {
 	// The level of the robot, project or system
 	Level string `json:"level,omitempty"`
 
-	// The name of the robot
+	// The name of the tag
 	Name string `json:"name,omitempty"`
 
 	// permissions

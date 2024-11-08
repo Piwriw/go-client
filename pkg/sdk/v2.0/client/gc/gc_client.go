@@ -44,11 +44,6 @@ type API interface {
 	   This endpoint is for get schedule of gc job.*/
 	GetGCSchedule(ctx context.Context, params *GetGCScheduleParams) (*GetGCScheduleOK, error)
 	/*
-	   StopGC stops the specific GC execution
-
-	   Stop the GC execution specified by ID*/
-	StopGC(ctx context.Context, params *StopGCParams) (*StopGCOK, error)
-	/*
 	   UpdateGCSchedule updates gc s schedule
 
 	   This endpoint is for update gc schedule.
@@ -206,33 +201,6 @@ func (a *Client) GetGCSchedule(ctx context.Context, params *GetGCScheduleParams)
 		return nil, err
 	}
 	return result.(*GetGCScheduleOK), nil
-
-}
-
-/*
-StopGC stops the specific GC execution
-
-Stop the GC execution specified by ID
-*/
-func (a *Client) StopGC(ctx context.Context, params *StopGCParams) (*StopGCOK, error) {
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
-		ID:                 "stopGC",
-		Method:             "PUT",
-		PathPattern:        "/system/gc/{gc_id}",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http", "https"},
-		Params:             params,
-		Reader:             &StopGCReader{formats: a.formats},
-		AuthInfo:           a.authInfo,
-		Context:            ctx,
-		Client:             params.HTTPClient,
-	})
-	if err != nil {
-		return nil, err
-	}
-	return result.(*StopGCOK), nil
 
 }
 

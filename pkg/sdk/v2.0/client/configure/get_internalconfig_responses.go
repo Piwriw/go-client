@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/models"
+	"github.com/goharbor/harbor/src/lib/config"
 )
 
 // GetInternalconfigReader is a Reader for the GetInternalconfig structure.
@@ -63,7 +63,7 @@ GetInternalconfigOK describes a response with status code 200, with default head
 Get system configurations successfully. The response body is a map.
 */
 type GetInternalconfigOK struct {
-	Payload models.InternalConfigurationsResponse
+	Payload config.InternalCfg
 }
 
 // IsSuccess returns true when this get internalconfig o k response has a 2xx status code
@@ -99,7 +99,7 @@ func (o *GetInternalconfigOK) String() string {
 	return fmt.Sprintf("[GET /internalconfig][%d] getInternalconfigOK  %+v", 200, o.Payload)
 }
 
-func (o *GetInternalconfigOK) GetPayload() models.InternalConfigurationsResponse {
+func (o *GetInternalconfigOK) GetPayload() config.InternalCfg {
 	return o.Payload
 }
 

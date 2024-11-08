@@ -11,7 +11,7 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// NotifyType Webhook supported notify type.
+// NotifyType Webhook supportted notify type.
 // Example: http
 //
 // swagger:model NotifyType

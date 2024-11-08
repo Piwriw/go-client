@@ -11,8 +11,8 @@ import (
 	"github.com/go-openapi/strfmt"
 )
 
-// EventType Webhook supported event type.
-// Example: PULL_ARTIFACT
+// EventType Webhook supportted event type.
+// Example: pullImage
 //
 // swagger:model EventType
 type EventType string

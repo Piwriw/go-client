@@ -67,7 +67,7 @@ type GetArtifactParams struct {
 	     A comma-separated lists of MIME types for the scan report or scan summary. The first mime type will be used when the report found for it.
 	Currently the mime type supports 'application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0' and 'application/vnd.security.vulnerability.report; version=1.1'
 
-	     Default: "application/vnd.security.vulnerability.report; version=1.1, application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0"
+	     Default: "application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0"
 	*/
 	XAcceptVulnerabilities *string
 
@@ -109,19 +109,13 @@ type GetArtifactParams struct {
 
 	/* RepositoryName.
 
-	   The name of the repository. If it contains slash, encode it twice over with URL encoding. e.g. a/b -> a%2Fb -> a%252Fb
+	   The name of the repository. If it contains slash, encode it with URL encoding. e.g. a/b -> a%252Fb
 	*/
 	RepositoryName string
 
-	/* WithAccessory.
-
-	   Specify whether the accessories are included of the returning artifacts.
-	*/
-	WithAccessory *bool
-
 	/* WithImmutableStatus.
 
-	   Specify whether the immutable status is inclued inside the tags of the returning artifacts.
+	   Specify whether the immutable status is inclued inside the tags of the returning artifacts. Only works when setting "with_tag=true"
 	*/
 	WithImmutableStatus *bool
 
@@ -169,13 +163,11 @@ func (o *GetArtifactParams) WithDefaults() *GetArtifactParams {
 // All values with no default are reset to their zero value.
 func (o *GetArtifactParams) SetDefaults() {
 	var (
-		xAcceptVulnerabilitiesDefault = string("application/vnd.security.vulnerability.report; version=1.1, application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0")
+		xAcceptVulnerabilitiesDefault = string("application/vnd.scanner.adapter.vuln.report.harbor+json; version=1.0")
 
 		pageDefault = int64(1)
 
 		pageSizeDefault = int64(10)
-
-		withAccessoryDefault = bool(false)
 
 		withImmutableStatusDefault = bool(false)
 
@@ -192,7 +184,6 @@ func (o *GetArtifactParams) SetDefaults() {
 		XAcceptVulnerabilities: &xAcceptVulnerabilitiesDefault,
 		Page:                   &pageDefault,
 		PageSize:               &pageSizeDefault,
-		WithAccessory:          &withAccessoryDefault,
 		WithImmutableStatus:    &withImmutableStatusDefault,
 		WithLabel:              &withLabelDefault,
 		WithScanOverview:       &withScanOverviewDefault,
@@ -314,17 +305,6 @@ func (o *GetArtifactParams) WithRepositoryName(repositoryName string) *GetArtifa
 // SetRepositoryName adds the repositoryName to the get artifact params
 func (o *GetArtifactParams) SetRepositoryName(repositoryName string) {
 	o.RepositoryName = repositoryName
-}
-
-// WithWithAccessory adds the withAccessory to the get artifact params
-func (o *GetArtifactParams) WithWithAccessory(withAccessory *bool) *GetArtifactParams {
-	o.SetWithAccessory(withAccessory)
-	return o
-}
-
-// SetWithAccessory adds the withAccessory to the get artifact params
-func (o *GetArtifactParams) SetWithAccessory(withAccessory *bool) {
-	o.WithAccessory = withAccessory
 }
 
 // WithWithImmutableStatus adds the withImmutableStatus to the get artifact params
@@ -453,23 +433,6 @@ func (o *GetArtifactParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 	// path param repository_name
 	if err := r.SetPathParam("repository_name", o.RepositoryName); err != nil {
 		return err
-	}
-
-	if o.WithAccessory != nil {
-
-		// query param with_accessory
-		var qrWithAccessory bool
-
-		if o.WithAccessory != nil {
-			qrWithAccessory = *o.WithAccessory
-		}
-		qWithAccessory := swag.FormatBool(qrWithAccessory)
-		if qWithAccessory != "" {
-
-			if err := r.SetQueryParam("with_accessory", qWithAccessory); err != nil {
-				return err
-			}
-		}
 	}
 
 	if o.WithImmutableStatus != nil {

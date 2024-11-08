@@ -11,7 +11,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-	"github.com/go-openapi/validate"
 )
 
 // GeneralInfo general info
@@ -25,14 +24,6 @@ type GeneralInfo struct {
 	// The setting of auth proxy this is only available when Harbor relies on authproxy for authentication.
 	AuthproxySettings *AuthproxySetting `json:"authproxy_settings,omitempty"`
 
-	// The banner message for the UI. It is the stringified result of the banner message object.
-	// Example: {\"closable\":true,\"message\":\"your banner message content\",\"type\":\"warning\",\"fromDate\":\"06/19/2023\",\"toDate\":\"06/21/2023\"}
-	BannerMessage *string `json:"banner_message,omitempty"`
-
-	// The current time of the server.
-	// Format: date-time
-	CurrentTime *strfmt.DateTime `json:"current_time,omitempty"`
-
 	// The external URL of Harbor, with protocol.
 	ExternalURL *string `json:"external_url,omitempty"`
 
@@ -44,12 +35,6 @@ type GeneralInfo struct {
 
 	// The flag to indicate whether notification mechanism is enabled on Harbor instance.
 	NotificationEnable *bool `json:"notification_enable,omitempty"`
-
-	// The OIDC provider name, empty if current auth is not OIDC_auth or OIDC provider is not configured.
-	OIDCProviderName *string `json:"oidc_provider_name,omitempty"`
-
-	// The flag to indicate whether the current auth mode should consider as a primary one.
-	PrimaryAuthMode *bool `json:"primary_auth_mode,omitempty"`
 
 	// Indicate who can create projects, it could be 'adminonly' or 'everyone'.
 	ProjectCreationRestriction *string `json:"project_creation_restriction,omitempty"`
@@ -65,6 +50,12 @@ type GeneralInfo struct {
 
 	// Indicate whether the Harbor instance enable user to register himself.
 	SelfRegistration *bool `json:"self_registration,omitempty"`
+
+	// If the Harbor instance is deployed with nested chartmuseum.
+	WithChartmuseum *bool `json:"with_chartmuseum,omitempty"`
+
+	// If the Harbor instance is deployed with nested notary.
+	WithNotary *bool `json:"with_notary,omitempty"`
 }
 
 // Validate validates this general info
@@ -72,10 +63,6 @@ func (m *GeneralInfo) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateAuthproxySettings(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateCurrentTime(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -99,18 +86,6 @@ func (m *GeneralInfo) validateAuthproxySettings(formats strfmt.Registry) error {
 			}
 			return err
 		}
-	}
-
-	return nil
-}
-
-func (m *GeneralInfo) validateCurrentTime(formats strfmt.Registry) error {
-	if swag.IsZero(m.CurrentTime) { // not required
-		return nil
-	}
-
-	if err := validate.FormatOf("current_time", "body", "date-time", m.CurrentTime.String(), formats); err != nil {
-		return err
 	}
 
 	return nil

@@ -20,17 +20,14 @@ import (
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/health"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/icon"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/immutable"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/jobservice"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/label"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/ldap"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/member"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/oidc"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/permissions"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/ping"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/preheat"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/project"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/project_metadata"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/purge"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/quota"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/registry"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/replication"
@@ -40,11 +37,8 @@ import (
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/robotv1"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/scan"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/scan_all"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/scan_data_export"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/scanner"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/schedule"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/search"
-	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/securityhub"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/statistic"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/system_cve_allowlist"
 	"github.com/goharbor/go-client/pkg/sdk/v2.0/client/systeminfo"
@@ -103,17 +97,14 @@ func New(c Config) *HarborAPI {
 	cli.Health = health.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Icon = icon.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Immutable = immutable.New(transport, strfmt.Default, c.AuthInfo)
-	cli.Jobservice = jobservice.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Label = label.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Ldap = ldap.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Member = member.New(transport, strfmt.Default, c.AuthInfo)
 	cli.OIDC = oidc.New(transport, strfmt.Default, c.AuthInfo)
-	cli.Permissions = permissions.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Ping = ping.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Preheat = preheat.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Project = project.New(transport, strfmt.Default, c.AuthInfo)
 	cli.ProjectMetadata = project_metadata.New(transport, strfmt.Default, c.AuthInfo)
-	cli.Purge = purge.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Quota = quota.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Registry = registry.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Replication = replication.New(transport, strfmt.Default, c.AuthInfo)
@@ -123,11 +114,8 @@ func New(c Config) *HarborAPI {
 	cli.Robotv1 = robotv1.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Scan = scan.New(transport, strfmt.Default, c.AuthInfo)
 	cli.ScanAll = scan_all.New(transport, strfmt.Default, c.AuthInfo)
-	cli.ScanDataExport = scan_data_export.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Scanner = scanner.New(transport, strfmt.Default, c.AuthInfo)
-	cli.Schedule = schedule.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Search = search.New(transport, strfmt.Default, c.AuthInfo)
-	cli.Securityhub = securityhub.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Statistic = statistic.New(transport, strfmt.Default, c.AuthInfo)
 	cli.SystemCVEAllowlist = system_cve_allowlist.New(transport, strfmt.Default, c.AuthInfo)
 	cli.Systeminfo = systeminfo.New(transport, strfmt.Default, c.AuthInfo)
@@ -147,17 +135,14 @@ type HarborAPI struct {
 	Health             *health.Client
 	Icon               *icon.Client
 	Immutable          *immutable.Client
-	Jobservice         *jobservice.Client
 	Label              *label.Client
 	Ldap               *ldap.Client
 	Member             *member.Client
 	OIDC               *oidc.Client
-	Permissions        *permissions.Client
 	Ping               *ping.Client
 	Preheat            *preheat.Client
 	Project            *project.Client
 	ProjectMetadata    *project_metadata.Client
-	Purge              *purge.Client
 	Quota              *quota.Client
 	Registry           *registry.Client
 	Replication        *replication.Client
@@ -167,11 +152,8 @@ type HarborAPI struct {
 	Robotv1            *robotv1.Client
 	Scan               *scan.Client
 	ScanAll            *scan_all.Client
-	ScanDataExport     *scan_data_export.Client
 	Scanner            *scanner.Client
-	Schedule           *schedule.Client
 	Search             *search.Client
-	Securityhub        *securityhub.Client
 	Statistic          *statistic.Client
 	SystemCVEAllowlist *system_cve_allowlist.Client
 	Systeminfo         *systeminfo.Client

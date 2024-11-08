@@ -31,7 +31,7 @@ type RobotCreate struct {
 	// The level of the robot, project or system
 	Level string `json:"level,omitempty"`
 
-	// The name of the robot
+	// The name of the tag
 	Name string `json:"name,omitempty"`
 
 	// permissions
